@@ -28,5 +28,22 @@ const proposal = buildChangeProposal({
 });
 assert.equal(proposal.title, 'Move digest later');
 assert.equal(proposal.approvalRequired, false);
+assert.equal(proposal.riskClass, 'safe-local');
+assert.equal(proposal.approvalBoundary, 'auto-implementable');
+assert.ok(proposal.rollbackPlan.length >= 1);
 
-console.log(JSON.stringify({ manifest, scorecard, proposal }, null, 2));
+const approvalProposal = buildChangeProposal({
+  title: 'Restart the gateway during active chats',
+  summary: 'This would interrupt live traffic and should not auto-apply.',
+  riskClass: 'medium-risk',
+  approvalRequired: true,
+  rollbackPlan: ['restore the previous gateway state'],
+  validationChecks: ['confirm no active chats are interrupted']
+});
+assert.equal(approvalProposal.riskClass, 'approval-required');
+assert.equal(approvalProposal.approvalBoundary, 'explicit-human-approval');
+assert.equal(approvalProposal.approvalRequired, true);
+assert.deepEqual(approvalProposal.rollbackPlan, ['restore the previous gateway state']);
+assert.deepEqual(approvalProposal.validationChecks, ['confirm no active chats are interrupted']);
+
+console.log(JSON.stringify({ manifest, scorecard, proposal, approvalProposal }, null, 2));

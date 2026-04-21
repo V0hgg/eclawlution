@@ -79,12 +79,22 @@ Lets `eclawlution` review, audit, research, improve, test, commit, and push impr
 This scaffold now includes:
 
 - a small scorecard engine (`src/scorecard.js`)
-- a change-proposal builder (`src/proposal.js`)
+- a change-proposal builder with risk, rollback, and approval metadata (`src/proposal.js`)
 - a CLI (`src/cli.js`)
 - self-tests (`src/self-test.js`)
 - CI workflow examples
 - issue templates for workflow tuning and feature requests
 - docs for the native plugin contract and operating model
+- a repo self-evolution workflow with subagent-oriented orchestration
+
+## How to use it
+
+Read `docs/USAGE.md` first.
+
+If you are a user, the short version is:
+- let the cron loops run daily, or
+- manually ask OpenClaw to run one of the loops now, or
+- inspect reports/proposals/Git history to see what changed
 
 ## Repository structure
 

@@ -28,3 +28,34 @@ Turn eclawlution from a workflow package into a real OpenClaw-native extension.
 - clear rollback notes
 - approval boundary metadata
 - human-readable summaries for every autonomous change
+
+## Structured proposal object
+
+Change proposals should carry enough metadata to be reviewed or auto-routed safely.
+
+```json
+{
+  "title": "Shift self-evolution summary later",
+  "summary": "Move the daily summary to a time when the user is more likely to be awake.",
+  "humanSummary": "Proposal to move the daily self-evolution summary later in the morning.",
+  "scope": ["cron", "reporting-cadence"],
+  "rationale": ["Current timing may be too early for useful review."],
+  "risks": ["Summary may overlap with other morning workflows."],
+  "riskClass": "medium-risk",
+  "approvalRequired": false,
+  "approvalBoundary": "maintainer-review",
+  "rollbackPlan": ["restore the previous cron schedule"],
+  "validationChecks": ["compare user engagement for 3 days"],
+  "nextActions": ["adjust summary cron"]
+}
+```
+
+### Risk classes
+- `safe-local` - additive local changes that are easy to revert
+- `medium-risk` - changes that deserve maintainer review before broad rollout
+- `approval-required` - changes that must not auto-apply without explicit human approval
+
+### Approval boundaries
+- `auto-implementable` - safe to apply locally when checks pass
+- `maintainer-review` - safe to draft, but should be reviewed before rollout
+- `explicit-human-approval` - blocked until a human explicitly approves it

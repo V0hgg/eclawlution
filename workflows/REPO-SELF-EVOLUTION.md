@@ -16,6 +16,14 @@ The workflow may:
 - write proposals for risky or unclear changes instead of forcing them
 
 ## Daily loop
+0. **Orchestrate**
+   - main agent acts as orchestrator
+   - spawn subagents early when useful so review, testing, and research can happen in parallel
+   - default subagent roles:
+     - **reviewer**: clarity, UX, docs, architecture, over-promising, user confusion
+     - **tester**: tests, checks, examples, script sanity, breakage risk
+     - **researcher**: better patterns from adaptive companion systems, workflow tuning, and agent design
+
 1. **Review**
    - read `README.md`, `docs/`, `workflows/`, recent `reports/`, and recent `proposals/`
    - inspect open issues or obvious repo gaps when useful
@@ -28,17 +36,21 @@ The workflow may:
    - look for patterns from companion systems, memory systems, agent workflow design, cron orchestration, and adaptive prompt/runtime design
    - prefer findings that can improve `eclawlution` concretely
 
-4. **Implement**
+4. **Synthesize**
+   - main agent combines reviewer, tester, and researcher findings
+   - resolve contradictions before implementing changes
+
+5. **Implement**
    - make safe additive changes to docs, scripts, examples, scorecards, proposals, templates, or tests
    - do not introduce secrets/auth changes
    - do not make destructive changes without explicit approval
 
-5. **Evaluate**
-   - run local checks/tests
+6. **Evaluate**
+   - run local checks/tests again after edits
    - confirm changes are coherent and reversible
    - if changes are risky or ambiguous, write a proposal instead of pushing directly
 
-6. **Publish**
+7. **Publish**
    - if safe and passing, commit with a concise message and push to `main`
    - if nothing worthwhile changed, do nothing
 
@@ -61,6 +73,7 @@ The workflow may:
 - `reports/YYYY-MM-DD.md`
 - optionally `proposals/YYYY-MM-DD-*.md`
 - git commits for safe completed improvements
+- explicit notes about what each subagent found when subagents were used
 
 ## Commit style
 - `docs(eclawlution): ...`
