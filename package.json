@@ -1,13 +1,18 @@
 {
   "name": "eclawlution",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": false,
   "description": "Adaptive self-evolution layer for OpenClaw companions and workflows",
   "type": "module",
   "main": "src/index.js",
+  "bin": {
+    "eclawlution": "src/cli.js"
+  },
   "scripts": {
-    "check": "node --check src/index.js",
-    "test": "node src/index.js --self-test"
+    "check": "node --check src/index.js && node --check src/cli.js && node --check src/scorecard.js && node --check src/proposal.js && node --check src/self-test.js",
+    "test": "node src/self-test.js",
+    "scorecard:example": "node src/cli.js scorecard examples/workflow-scorecard.example.json",
+    "proposal:example": "node src/cli.js proposal examples/change-proposal.example.json"
   },
   "keywords": [
     "openclaw",

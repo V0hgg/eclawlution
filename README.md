@@ -71,6 +71,18 @@ Keeps long-term memory compact, deduplicated, and retrieval-friendly.
 - proposal/draft PR generation for larger changes
 - human approval boundaries for risky changes
 
+## What phase 2 adds
+
+This scaffold now includes:
+
+- a small scorecard engine (`src/scorecard.js`)
+- a change-proposal builder (`src/proposal.js`)
+- a CLI (`src/cli.js`)
+- self-tests (`src/self-test.js`)
+- CI workflow examples
+- issue templates for workflow tuning and feature requests
+- docs for the native plugin contract and operating model
+
 ## Repository structure
 
 - `src/` — initial extension scaffold and protocol registry
@@ -101,4 +113,4 @@ But still require approval for:
 
 ## Roadmap
 
-See `docs/ARCHITECTURE.md` and `docs/ROADMAP.md`.
+See `docs/ARCHITECTURE.md`, `docs/PLUGIN-CONTRACT.md`, `docs/OPERATING-MODEL.md`, and `docs/ROADMAP.md`.

@@ -1,0 +1,17 @@
+{
+  "title": "Shift self-evolution summary later",
+  "summary": "Move the daily summary to a time when the user is more likely to be awake.",
+  "scope": ["cron", "reporting-cadence"],
+  "rationale": [
+    "Current timing may be too early for useful review.",
+    "A later summary could improve visibility and feedback quality."
+  ],
+  "risks": [
+    "Summary may overlap with other morning workflows."
+  ],
+  "approvalRequired": false,
+  "nextActions": [
+    "adjust summary cron",
+    "observe user response for 3 days"
+  ]
+}

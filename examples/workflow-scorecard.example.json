@@ -1,0 +1,13 @@
+{
+  "name": "conversation-digest-daily",
+  "usefulness": 8,
+  "noise": 3,
+  "timingFit": 7,
+  "userFit": 9,
+  "maintainability": 7,
+  "surpriseCost": 2,
+  "notes": [
+    "Digest is useful but may need shorter summaries.",
+    "Timing is decent but could shift if user sleep pattern changes."
+  ]
+}

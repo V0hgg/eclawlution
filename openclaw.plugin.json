@@ -1,4 +1,6 @@
 {
   "id": "eclawlution",
-  "configSchema": false
+  "enabledByDefault": false,
+  "configSchema": false,
+  "description": "Adaptive self-evolution and workflow-tuning layer for OpenClaw companions"
 }

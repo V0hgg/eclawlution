@@ -1,0 +1,29 @@
+name: Workflow tuning
+about: Suggest a job, prompt, cadence, or schedule improvement for eclawlution
+title: "[workflow] "
+labels: [workflow]
+body:
+  - type: textarea
+    id: context
+    attributes:
+      label: Current workflow problem
+      description: What feels off, noisy, mistimed, or underpowered?
+    validations:
+      required: true
+  - type: textarea
+    id: desired
+    attributes:
+      label: Desired improvement
+      description: What should change?
+    validations:
+      required: true
+  - type: dropdown
+    id: risk
+    attributes:
+      label: Risk level
+      options:
+        - safe-local
+        - medium-risk
+        - approval-required
+    validations:
+      required: true

@@ -12,11 +12,14 @@
 - usefulness scoring for cron jobs
 - schedule recommendation logic
 - style-fit diff tracking
+- CLI for scorecards and change proposals
+- CI and issue templates
 
 ## v0.3
 - native OpenClaw plugin contract
 - extension hooks for transcript digestion
 - structured recommendation objects
+- bridge current workflow package into a real OpenClaw extension surface
 
 ## v0.4
 - draft PR / proposal generation

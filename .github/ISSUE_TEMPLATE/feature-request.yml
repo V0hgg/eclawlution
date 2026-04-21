@@ -1,0 +1,19 @@
+name: Feature request
+about: Request a new capability for eclawlution
+title: "[feature] "
+labels: [feature]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What missing capability is hurting usefulness or adaptation?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposal
+      description: What should eclawlution learn to do?
+    validations:
+      required: true
