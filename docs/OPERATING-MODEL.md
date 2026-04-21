@@ -1,7 +1,8 @@
 # Operating Model
 
 ## Daily loops
-- 02:00 self-evolution
+- 02:00 workspace self-evolution
+- 03:30 eclawlution repo self-evolution
 - 06:00 summary to chat
 - 23:40 conversation digest
 
@@ -19,6 +20,6 @@
 - Is this adaptation honest and safe?
 
 ## Change classes
-- safe-local: docs, prompts, memory files, schedule tweaks
-- medium-risk: workflow boundary changes, cron additions/removals
+- safe-local: docs, prompts, memory files, schedule tweaks, templates, examples, repo reports
+- medium-risk: workflow boundary changes, cron additions/removals, repo automation changes
 - approval-required: restarts, destructive edits, external effects, auth changes

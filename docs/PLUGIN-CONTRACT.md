@@ -7,7 +7,7 @@ Turn eclawlution from a workflow package into a real OpenClaw-native extension.
 - register evolution-related hooks
 - provide structured scorecards for jobs/workflows
 - provide proposal objects for schedule/prompt tuning
-- expose safe helper utilities for digest, reflection, and workflow changes
+- expose safe helper utilities for digest, reflection, workflow changes, and repo self-evolution reporting
 
 ## Non-goals
 - silent destructive autonomy

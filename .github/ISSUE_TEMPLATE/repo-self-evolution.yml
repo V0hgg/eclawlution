@@ -1,0 +1,29 @@
+name: Repo self-evolution finding
+about: Record a daily repo finding, weakness, or improvement opportunity
+title: "[self-evolution] "
+labels: [self-evolution]
+body:
+  - type: textarea
+    id: finding
+    attributes:
+      label: Finding
+      description: What did the repo review or audit reveal?
+    validations:
+      required: true
+  - type: textarea
+    id: action
+    attributes:
+      label: Suggested action
+      description: What should change?
+    validations:
+      required: true
+  - type: dropdown
+    id: risk
+    attributes:
+      label: Risk level
+      options:
+        - safe-local
+        - medium-risk
+        - approval-required
+    validations:
+      required: true

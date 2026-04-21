@@ -20,6 +20,7 @@
 - extension hooks for transcript digestion
 - structured recommendation objects
 - bridge current workflow package into a real OpenClaw extension surface
+- daily repo self-evolution loop with reports/proposals/auto-push for safe changes
 
 ## v0.4
 - draft PR / proposal generation

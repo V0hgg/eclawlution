@@ -61,6 +61,9 @@ Adjusts cron schedules, prompt scopes, summaries, and maintenance routines when 
 ### 4. Memory maintenance
 Keeps long-term memory compact, deduplicated, and retrieval-friendly.
 
+### 5. Repo self-evolution
+Lets `eclawlution` review, audit, research, improve, test, commit, and push improvements to itself on a daily loop, while routing risky ideas into proposals instead of forcing them.
+
 ## Planned extension capabilities
 
 - transcript-aware digest hooks
@@ -88,6 +91,8 @@ This scaffold now includes:
 - `src/` — initial extension scaffold and protocol registry
 - `docs/` — architecture, roadmap, safety model
 - `workflows/` — markdown workflow contracts
+- `reports/` — daily self-evolution reports for the repo itself
+- `proposals/` — risky or not-yet-approved ideas
 - `examples/` — example OpenClaw wiring/config snippets
 
 ## Status
@@ -113,4 +118,4 @@ But still require approval for:
 
 ## Roadmap
 
-See `docs/ARCHITECTURE.md`, `docs/PLUGIN-CONTRACT.md`, `docs/OPERATING-MODEL.md`, and `docs/ROADMAP.md`.
+See `docs/ARCHITECTURE.md`, `docs/PLUGIN-CONTRACT.md`, `docs/OPERATING-MODEL.md`, `docs/ROADMAP.md`, and `workflows/REPO-SELF-EVOLUTION.md`.
