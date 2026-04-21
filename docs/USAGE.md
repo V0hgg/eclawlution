@@ -45,9 +45,12 @@ npm run check
 npm run manifest
 npm run scorecard:example
 npm run proposal:example
+npm run security:example
 ```
 
 These commands do not run the whole OpenClaw orchestration loop, but they let you inspect the building blocks.
+
+`npm run security:example` is the quickest way to sanity-check how the current security helper classifies a risky prompt or change request.
 
 ### Mode 3: Review what changed
 Check these places:

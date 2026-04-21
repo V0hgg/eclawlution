@@ -7,4 +7,4 @@
 "Run the conversation digest now. Review today's conversations and update style fit, durable preferences, and daily memory where justified."
 
 ## Run eclawlution repo self-evolution now
-"Run the eclawlution repo self-evolution now. Spawn subagents for review, testing, and research, then synthesize, implement safe additive changes, rerun checks, and commit/push if safe. Write a report either way."
+"Run the eclawlution repo self-evolution now. Spawn subagents for review, testing, research, and security review, then synthesize, implement safe additive changes, rerun checks, and commit/push if safe. Write a report either way."

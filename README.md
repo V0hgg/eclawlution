@@ -83,6 +83,7 @@ This scaffold now includes:
 
 - a small scorecard engine (`src/scorecard.js`)
 - a change-proposal builder with risk, rollback, and approval metadata (`src/proposal.js`)
+- a security posture helper plus CLI entrypoint (`src/security.js`)
 - a CLI (`src/cli.js`)
 - self-tests (`src/self-test.js`)
 - CI workflow examples
@@ -98,7 +99,8 @@ Read `docs/USAGE.md` first.
 If you are a user, the short version is:
 - let the cron loops run daily, or
 - manually ask OpenClaw to run one of the loops now, or
-- inspect reports/proposals/Git history to see what changed
+- inspect reports/proposals/Git history to see what changed, or
+- run the local example commands in `docs/USAGE.md`, including the security example
 
 ## Repository structure
 

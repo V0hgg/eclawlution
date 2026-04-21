@@ -42,6 +42,17 @@ Prompt-injection findings should increase risk class and often force proposal-on
 - proposal metadata
 - tests/examples around prompt injection and unsafe requests
 
+## Manual verification surface
+
+Inside the repo, you can inspect the current security helper behavior with:
+
+```bash
+npm run security:example
+node src/cli.js security examples/security-posture.example.json
+```
+
+This is not a full security audit. It is a small local verification path for checking how `eclawlution` currently classifies risky prompts and risky changes.
+
 ## What still needs approval
 - new auth flows
 - restart behavior that impacts live sessions

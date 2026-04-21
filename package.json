@@ -13,7 +13,8 @@
     "test": "node src/self-test.js",
     "manifest": "node src/cli.js manifest",
     "scorecard:example": "node src/cli.js scorecard examples/workflow-scorecard.example.json",
-    "proposal:example": "node src/cli.js proposal examples/change-proposal.example.json"
+    "proposal:example": "node src/cli.js proposal examples/change-proposal.example.json",
+    "security:example": "node src/cli.js security examples/security-posture.example.json"
   },
   "keywords": [
     "openclaw",

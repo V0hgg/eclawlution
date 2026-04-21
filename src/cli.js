@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import { getEclawlutionManifest } from './index.js';
 import { computeWorkflowScorecard } from './scorecard.js';
 import { buildChangeProposal } from './proposal.js';
+import { evaluateSecurityPosture } from './security.js';
 
 const [, , command, file] = process.argv;
 
@@ -22,6 +23,10 @@ switch (command) {
     if (!file) throw new Error('Missing JSON file for proposal');
     console.log(JSON.stringify(buildChangeProposal(readJson(file)), null, 2));
     break;
+  case 'security':
+    if (!file) throw new Error('Missing JSON file for security evaluation');
+    console.log(JSON.stringify(evaluateSecurityPosture(readJson(file)), null, 2));
+    break;
   default:
-    console.log('Usage: eclawlution <manifest|scorecard|proposal> [json-file]');
+    console.log('Usage: eclawlution <manifest|scorecard|proposal|security> [json-file]');
 }
