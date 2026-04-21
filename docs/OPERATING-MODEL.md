@@ -18,6 +18,7 @@
 - Is this schedule still right?
 - Is this workflow too noisy or too timid?
 - Is this adaptation honest and safe?
+- Is this more resistant to prompt injection, secret leakage, and risky autonomy than before?
 
 ## Change classes
 - safe-local: docs, prompts, memory files, schedule tweaks, templates, examples, repo reports

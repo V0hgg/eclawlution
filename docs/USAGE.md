@@ -67,6 +67,7 @@ The repo loop should behave like this:
    - **reviewer subagent** — audits clarity, UX, architecture, and over-promising
    - **tester subagent** — runs tests/checks/examples and reports failures or weak spots
    - **researcher subagent** — finds better patterns for adaptive companion systems and workflow tuning
+   - **security reviewer subagent** — hunts prompt injection risk, weak approval boundaries, secret-handling problems, and unsafe autonomy
 3. Main agent synthesizes findings
 4. Main agent makes safe additive improvements
 5. Main agent reruns tests/checks

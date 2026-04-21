@@ -64,6 +64,9 @@ Keeps long-term memory compact, deduplicated, and retrieval-friendly.
 ### 5. Repo self-evolution
 Lets `eclawlution` review, audit, research, improve, test, commit, and push improvements to itself on a daily loop, while routing risky ideas into proposals instead of forcing them.
 
+### 6. Security hardening
+Makes `eclawlution` improve prompt-injection resistance, approval boundaries, restart safety, and secret-handling posture over time.
+
 ## Planned extension capabilities
 
 - transcript-aware digest hooks
@@ -86,6 +89,7 @@ This scaffold now includes:
 - issue templates for workflow tuning and feature requests
 - docs for the native plugin contract and operating model
 - a repo self-evolution workflow with subagent-oriented orchestration
+- prompt-injection and security posture helpers (`src/security.js`)
 
 ## How to use it
 

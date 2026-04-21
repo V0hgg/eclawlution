@@ -23,6 +23,7 @@ The workflow may:
      - **reviewer**: clarity, UX, docs, architecture, over-promising, user confusion
      - **tester**: tests, checks, examples, script sanity, breakage risk
      - **researcher**: better patterns from adaptive companion systems, workflow tuning, and agent design
+     - **security reviewer**: prompt injection resistance, approval boundaries, secret-handling posture, restart safety, and risky autonomy
 
 1. **Review**
    - read `README.md`, `docs/`, `workflows/`, recent `reports/`, and recent `proposals/`
@@ -30,14 +31,15 @@ The workflow may:
 
 2. **Audit**
    - identify weak spots: vague docs, missing tests, missing examples, weak boundaries, duplicated concepts, missing guardrails, stale roadmap items
-   - score the repo on clarity, usefulness, safety, extensibility, and user-fit
+   - explicitly look for prompt-injection weaknesses, over-broad autonomy, and weak approval boundaries
+   - score the repo on clarity, usefulness, safety, extensibility, user-fit, and security posture
 
 3. **Research**
    - look for patterns from companion systems, memory systems, agent workflow design, cron orchestration, and adaptive prompt/runtime design
    - prefer findings that can improve `eclawlution` concretely
 
 4. **Synthesize**
-   - main agent combines reviewer, tester, and researcher findings
+   - main agent combines reviewer, tester, researcher, and security-review findings
    - resolve contradictions before implementing changes
 
 5. **Implement**

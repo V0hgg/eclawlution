@@ -11,12 +11,13 @@ export function computeWorkflowScorecard(input) {
     timingFit: clampScore(input.timingFit),
     userFit: clampScore(input.userFit),
     maintainability: clampScore(input.maintainability),
-    surpriseCost: clampScore(input.surpriseCost)
+    surpriseCost: clampScore(input.surpriseCost),
+    securityPosture: clampScore(input.securityPosture)
   };
 
-  const positive = dimensions.usefulness + dimensions.timingFit + dimensions.userFit + dimensions.maintainability;
+  const positive = dimensions.usefulness + dimensions.timingFit + dimensions.userFit + dimensions.maintainability + dimensions.securityPosture;
   const drag = dimensions.noise + dimensions.surpriseCost;
-  const overall = Number(((positive - drag + 20) / 6).toFixed(2));
+  const overall = Number(((positive - drag + 20) / 7).toFixed(2));
 
   const recommendations = [];
   if (dimensions.timingFit <= 4) recommendations.push('consider changing schedule or cadence');
@@ -24,6 +25,7 @@ export function computeWorkflowScorecard(input) {
   if (dimensions.userFit <= 5) recommendations.push('tighten prompt scope toward the user’s actual preferences');
   if (dimensions.maintainability <= 5) recommendations.push('simplify workflow boundaries or merge overlapping jobs');
   if (dimensions.surpriseCost >= 6) recommendations.push('add approval boundaries or reduce autonomous scope');
+  if (dimensions.securityPosture <= 5) recommendations.push('add security hardening, prompt-injection checks, and clearer approval boundaries');
   if (recommendations.length === 0) recommendations.push('keep current workflow shape and re-evaluate later');
 
   return {

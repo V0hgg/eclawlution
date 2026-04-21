@@ -32,6 +32,12 @@ export const boundaries = {
     'destructive-edits',
     'new-secrets-or-auth',
     'external-side-effects'
+  ],
+  securityPriorities: [
+    'prompt-injection-resistance',
+    'secret-handling-boundaries',
+    'approval-boundary-integrity',
+    'live-restart-safety'
   ]
 };
 
@@ -41,7 +47,8 @@ export const scorecardDimensions = [
   'timingFit',
   'userFit',
   'maintainability',
-  'surpriseCost'
+  'surpriseCost',
+  'securityPosture'
 ];
 
 export function getEclawlutionManifest() {

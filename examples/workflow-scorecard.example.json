@@ -6,6 +6,7 @@
   "userFit": 9,
   "maintainability": 7,
   "surpriseCost": 2,
+  "securityPosture": 8,
   "notes": [
     "Digest is useful but may need shorter summaries.",
     "Timing is decent but could shift if user sleep pattern changes."
