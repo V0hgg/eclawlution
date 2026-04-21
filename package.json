@@ -1,0 +1,26 @@
+{
+  "name": "eclawlution",
+  "version": "0.1.0",
+  "private": false,
+  "description": "Adaptive self-evolution layer for OpenClaw companions and workflows",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "check": "node --check src/index.js",
+    "test": "node src/index.js --self-test"
+  },
+  "keywords": [
+    "openclaw",
+    "companion",
+    "memory",
+    "workflow",
+    "evolution",
+    "agent"
+  ],
+  "author": "Hunter",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/V0hgg/eclawlution.git"
+  }
+}
