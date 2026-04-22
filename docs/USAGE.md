@@ -46,11 +46,15 @@ npm run manifest
 npm run scorecard:example
 npm run proposal:example
 npm run security:example
+npm run security:medium-risk-example
 ```
 
 These commands do not run the whole OpenClaw orchestration loop, but they let you inspect the building blocks.
 
-`npm run security:example` is the quickest way to sanity-check how the current security helper classifies a risky prompt or change request.
+`npm run security:medium-risk-example` shows a suspicious prompt that should stay at `medium-risk`.
+`npm run security:example` shows a higher-severity prompt that should escalate to `approval-required`.
+
+Both are quick sanity checks for how the current security helper classifies risky prompts and change requests.
 
 ### Mode 3: Review what changed
 Check these places:

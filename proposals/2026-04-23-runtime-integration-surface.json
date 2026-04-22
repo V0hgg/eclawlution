@@ -1,0 +1,38 @@
+{
+  "title": "Define a real OpenClaw runtime integration surface",
+  "summary": "Bridge the current workflow package into a more concrete runtime contract so docs, manifest, and examples stop implying hooks that do not yet exist.",
+  "humanSummary": "Proposal to define a real runtime integration surface for eclawlution instead of relying only on workflow docs and helper scripts.",
+  "scope": [
+    "openclaw.plugin.json",
+    "docs/PLUGIN-CONTRACT.md",
+    "examples/openclaw-wiring.md",
+    "runtime-wiring"
+  ],
+  "rationale": [
+    "The repo currently explains a compelling adaptive system but the runtime integration surface is still thin.",
+    "A clearer contract would reduce user confusion, tighten architecture claims, and make future implementation phases more honest.",
+    "This is large enough to deserve maintainer review before implementation."
+  ],
+  "risks": [
+    "Could imply hook support that OpenClaw runtime does not yet expose.",
+    "Could create docs and manifest drift if implemented partially.",
+    "Might surprise live users if automation behavior is described too concretely too early."
+  ],
+  "riskClass": "medium-risk",
+  "approvalRequired": false,
+  "approvalBoundary": "maintainer-review",
+  "rollbackPlan": [
+    "revert manifest and docs changes back to the current workflow-only package description",
+    "re-run local checks and examples after reverting"
+  ],
+  "validationChecks": [
+    "Confirm README, plugin contract, manifest, and examples all describe the same runtime surface.",
+    "Avoid auth, secrets, restart behavior, or other live side effects.",
+    "Keep the first implementation additive and local-only."
+  ],
+  "nextActions": [
+    "Design a minimal hook contract for digest, self-evolution, and repo-review outputs.",
+    "Decide whether the first step is manifest/schema clarification, a combined review artifact, or actual runtime hook registration.",
+    "Review the plan with a maintainer before implementation."
+  ]
+}

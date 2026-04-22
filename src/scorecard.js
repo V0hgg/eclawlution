@@ -5,14 +5,16 @@ export function clampScore(value) {
 }
 
 export function computeWorkflowScorecard(input) {
+  const source = input && typeof input === 'object' ? input : {};
+
   const dimensions = {
-    usefulness: clampScore(input.usefulness),
-    noise: clampScore(input.noise),
-    timingFit: clampScore(input.timingFit),
-    userFit: clampScore(input.userFit),
-    maintainability: clampScore(input.maintainability),
-    surpriseCost: clampScore(input.surpriseCost),
-    securityPosture: clampScore(input.securityPosture)
+    usefulness: clampScore(source.usefulness),
+    noise: clampScore(source.noise),
+    timingFit: clampScore(source.timingFit),
+    userFit: clampScore(source.userFit),
+    maintainability: clampScore(source.maintainability),
+    surpriseCost: clampScore(source.surpriseCost),
+    securityPosture: clampScore(source.securityPosture)
   };
 
   const positive = dimensions.usefulness + dimensions.timingFit + dimensions.userFit + dimensions.maintainability + dimensions.securityPosture;
@@ -29,10 +31,10 @@ export function computeWorkflowScorecard(input) {
   if (recommendations.length === 0) recommendations.push('keep current workflow shape and re-evaluate later');
 
   return {
-    name: input.name ?? 'unnamed-workflow',
+    name: source.name ?? 'unnamed-workflow',
     dimensions,
     overall,
     recommendations,
-    notes: input.notes ?? []
+    notes: source.notes ?? []
   };
 }

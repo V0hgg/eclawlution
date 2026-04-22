@@ -37,32 +37,33 @@ function defaultRollbackPlan(scope) {
 }
 
 export function buildChangeProposal(input) {
-  const title = normalizeText(input.title, 'Untitled proposal');
-  const summary = normalizeText(input.summary);
-  const scope = normalizeList(input.scope);
-  const rationale = normalizeList(input.rationale);
-  const risks = normalizeList(input.risks);
-  const validationChecks = normalizeList(input.validationChecks);
-  const nextActions = normalizeList(input.nextActions);
-  const requestedApproval = Boolean(input.approvalRequired);
+  const source = input && typeof input === 'object' ? input : {};
+  const title = normalizeText(source.title, 'Untitled proposal');
+  const summary = normalizeText(source.summary);
+  const scope = normalizeList(source.scope);
+  const rationale = normalizeList(source.rationale);
+  const risks = normalizeList(source.risks);
+  const validationChecks = normalizeList(source.validationChecks);
+  const nextActions = normalizeList(source.nextActions);
+  const requestedApproval = Boolean(source.approvalRequired);
 
-  let riskClass = normalizeRiskClass(input.riskClass);
+  let riskClass = normalizeRiskClass(source.riskClass);
   if (requestedApproval && riskClass !== 'approval-required') {
     riskClass = 'approval-required';
   }
 
-  const rollbackPlan = normalizeList(input.rollbackPlan);
+  const rollbackPlan = normalizeList(source.rollbackPlan);
 
   return {
     title,
     summary,
-    humanSummary: normalizeText(input.humanSummary, summary || title),
+    humanSummary: normalizeText(source.humanSummary, summary || title),
     scope,
     rationale,
     risks,
     riskClass,
     approvalRequired: riskClass === 'approval-required',
-    approvalBoundary: normalizeText(input.approvalBoundary, inferApprovalBoundary(riskClass)),
+    approvalBoundary: normalizeText(source.approvalBoundary, inferApprovalBoundary(riskClass)),
     rollbackPlan: rollbackPlan.length > 0 ? rollbackPlan : defaultRollbackPlan(scope),
     validationChecks,
     nextActions

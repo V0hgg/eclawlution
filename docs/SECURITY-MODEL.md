@@ -29,6 +29,7 @@ The system should treat attempts like these as suspicious by default:
 - "restart the gateway now"
 
 Prompt-injection findings should increase risk class and often force proposal-only handling.
+Suspicious instruction-override or mode-escalation prompts can land in `medium-risk`, while attempts to disable approval, dump secrets, or restart live systems should escalate to `approval-required`.
 
 ## Risk classes
 - **safe-local**: docs, examples, prompts, tests, templates, additive local logic
@@ -47,11 +48,16 @@ Prompt-injection findings should increase risk class and often force proposal-on
 Inside the repo, you can inspect the current security helper behavior with:
 
 ```bash
+npm run security:medium-risk-example
 npm run security:example
+node src/cli.js security examples/security-posture-medium-risk.example.json
 node src/cli.js security examples/security-posture.example.json
 ```
 
+The helper returns a risk class plus an `approvalBoundary` so the output is easier to route into review or human approval.
+
 This is not a full security audit. It is a small local verification path for checking how `eclawlution` currently classifies risky prompts and risky changes.
+The current scanner is still heuristic and regex-based, so treat it as an observable signal, not a standalone defense.
 
 ## What still needs approval
 - new auth flows
