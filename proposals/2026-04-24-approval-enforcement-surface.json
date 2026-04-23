@@ -1,0 +1,38 @@
+{
+  "title": "Define approval enforcement and approval-tracking surface",
+  "summary": "Turn approvalBoundary from a routing hint into a clearer runtime contract with explicit approval recording and operator-visible enforcement points.",
+  "humanSummary": "Proposal to design a real approval-enforcement surface for eclawlution so risky changes are not only labeled, but also routed and tracked more explicitly.",
+  "scope": [
+    "docs/PLUGIN-CONTRACT.md",
+    "runtime-wiring",
+    "approval-tracking",
+    "proposal-lifecycle"
+  ],
+  "rationale": [
+    "Current helpers classify risk and approval boundaries, but they do not enforce them at runtime.",
+    "Daily repo review found a trust gap between the repo's clear security language and the still-thin runtime enforcement surface.",
+    "A real approval contract would reduce over-promising and make risky autonomy easier to audit."
+  ],
+  "risks": [
+    "Could imply OpenClaw runtime hooks or approval plumbing that do not yet exist.",
+    "Could create docs and implementation drift if approval recording lands only partially.",
+    "A rushed design could add operator friction or surprise without actually improving safety."
+  ],
+  "riskClass": "medium-risk",
+  "approvalRequired": false,
+  "approvalBoundary": "maintainer-review",
+  "rollbackPlan": [
+    "revert docs and runtime-surface changes back to advisory approval labels only",
+    "re-run local checks and examples after reverting"
+  ],
+  "validationChecks": [
+    "Keep the first step additive and local-only, without auth, secrets, or live restart behavior.",
+    "Ensure README, plugin contract, security model, and proposal lifecycle all describe the same approval surface.",
+    "Prefer operator-visible approval state over hidden automation."
+  ],
+  "nextActions": [
+    "Define the minimum approval lifecycle states and who sets them.",
+    "Decide whether enforcement lives in plugin hooks, review artifacts, or orchestrator-side workflow wiring first.",
+    "Review the design with a maintainer before implementing runtime behavior changes."
+  ]
+}

@@ -1,5 +1,8 @@
 # Example OpenClaw Wiring
 
+These are suggested schedules and companion files for a workspace you wire yourself.
+The current repo does not auto-register these jobs.
+
 ## Suggested loops
 - 02:00 workspace self-evolution
 - 03:30 eclawlution repo self-evolution

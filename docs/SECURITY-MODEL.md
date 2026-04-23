@@ -43,6 +43,20 @@ Suspicious instruction-override or mode-escalation prompts can land in `medium-r
 - proposal metadata
 - tests/examples around prompt injection and unsafe requests
 
+## Current enforcement boundary
+
+Today the repo exposes security posture **classification**, not hard runtime enforcement.
+
+- `evaluateSecurityPosture()` classifies prompts and change requests into a risk class plus `approvalBoundary`
+- `buildChangeProposal()` formats review metadata, rollback notes, and approval labels
+- neither helper blocks execution by itself
+- callers should run security evaluation first, then route `medium-risk` and `approval-required` results into maintainer or human review instead of auto-applying them
+
+Important implementation note:
+- `buildChangeProposal()` does not inspect `destructive`, `restartsLiveSystems`, or `externalEffects` flags on its own
+- if you skip `evaluateSecurityPosture()` and build a proposal directly, you can under-classify risky work
+- the intended flow is: security evaluation -> proposal routing -> human/orchestrator decision -> implementation
+
 ## Manual verification surface
 
 Inside the repo, you can inspect the current security helper behavior with:

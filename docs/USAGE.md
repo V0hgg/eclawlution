@@ -10,10 +10,22 @@ It works through 3 main loops:
 - **self-evolution** — improves the assistant and surrounding workflows
 - **repo self-evolution** — improves the `eclawlution` repo itself
 
+## What this repo actually provides today
+
+This repo currently provides:
+- workflow contracts and examples
+- local helper commands for scorecards, proposals, manifests, and security posture checks
+- reports and proposal patterns for the repo self-evolution loop
+
+It does not currently auto-install cron jobs or register native OpenClaw runtime hooks for you.
+If you want the daily loop timings below, wire them in your own OpenClaw workspace.
+
 ## If you are a user, how do you use it?
 
 ### Mode 1: Let the daily cron jobs run
 This is the easiest mode.
+
+This mode assumes you already wired those jobs yourself. The repo documents the pattern, but the current plugin scaffold does not register the jobs automatically.
 
 Expected daily flow:
 - **23:40** conversation digest updates style and memory fit
@@ -56,6 +68,12 @@ These commands do not run the whole OpenClaw orchestration loop, but they let yo
 
 Both are quick sanity checks for how the current security helper classifies risky prompts and change requests.
 
+Important boundary:
+- `node src/cli.js security ...` classifies a prompt or change request
+- `node src/cli.js proposal ...` formats review metadata and rollback notes
+- neither command enforces approval by itself
+- if the output says `approval-required`, route it into a proposal or human review instead of forcing the change
+
 ### Mode 3: Review what changed
 Check these places:
 - workspace `MEMORY.md`
@@ -96,6 +114,8 @@ The repo loop should behave like this:
 - destructive changes
 - new auth/secrets
 - anything with surprising external side effects
+
+Approval enforcement is still an operator and orchestrator responsibility today. The local CLI helps classify and document changes, but it does not act as a hard runtime gate.
 
 ## Short mental model
 

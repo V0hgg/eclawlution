@@ -39,6 +39,23 @@ This repository starts with a **Phase 1 workflow package**:
 
 Then grows into **Phase 2 native OpenClaw extension hooks**.
 
+## What is real today
+
+Today this repo gives you:
+
+- workflow contracts in `workflows/`
+- local helper utilities in `src/` for manifests, scorecards, proposals, and security posture checks
+- example prompts and wiring notes in `examples/`
+- daily reports and proposal routing for repo self-evolution
+
+Today this repo does **not** yet give you:
+
+- automatic cron installation
+- transcript digestion hooks
+- memory or style-fit mutation code
+- runtime enforcement of `approvalBoundary`
+- native OpenClaw hook registration beyond a minimal manifest scaffold
+
 ## Design goals
 
 1. Improve memory quality, not just memory quantity.
@@ -97,7 +114,7 @@ This scaffold now includes:
 Read `docs/USAGE.md` first.
 
 If you are a user, the short version is:
-- let the cron loops run daily, or
+- wire the suggested cron loops in your OpenClaw workspace and let them run daily, or
 - manually ask OpenClaw to run one of the loops now, or
 - inspect reports/proposals/Git history to see what changed, or
 - run the local example commands in `docs/USAGE.md`, including the medium-risk and approval-required security examples
@@ -113,7 +130,7 @@ If you are a user, the short version is:
 
 ## Status
 
-Early scaffold, but the operating ideas are already being used in a live OpenClaw workspace.
+Early scaffold. The operating ideas are already being used in a live OpenClaw workspace, but this repo currently exposes helper utilities and workflow contracts, not full runtime hooks.
 
 ## Safety model
 
