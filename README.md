@@ -100,7 +100,7 @@ This scaffold now includes:
 
 - a small scorecard engine (`src/scorecard.js`)
 - a change-proposal builder with risk, rollback, and approval metadata (`src/proposal.js`)
-- a security posture helper with prompt-injection signal matching and approval-boundary output (`src/security.js`)
+- a security posture helper with severity-tagged prompt-injection signal matching, structured blocker details, and approval-boundary output (`src/security.js`)
 - a CLI (`src/cli.js`)
 - self-tests (`src/self-test.js`)
 - CI workflow examples
