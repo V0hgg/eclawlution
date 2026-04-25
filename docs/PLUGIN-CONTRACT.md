@@ -27,7 +27,7 @@ Turn eclawlution from a workflow package into a real OpenClaw-native extension.
 - explicit risk classes on all recommendations
 - clear rollback notes
 - approval boundary metadata
-- prompt-injection resistance checks for risky instruction flows, with structured blocker details for operator review
+- prompt-injection resistance checks for risky instruction flows across prompt and other text-bearing change-request fields, with structured blocker details for operator review
 - human-readable summaries for every autonomous change
 
 ## Structured proposal object

@@ -59,6 +59,7 @@ npm run scorecard:example
 npm run proposal:example
 npm run security:example
 npm run security:medium-risk-example
+npm run security:non-prompt-example
 ```
 
 These commands do not run the whole OpenClaw orchestration loop, but they let you inspect the building blocks.
@@ -66,12 +67,14 @@ These commands do not run the whole OpenClaw orchestration loop, but they let yo
 `npm run security:medium-risk-example` shows a suspicious prompt that should stay at `medium-risk`.
 `npm run security:example` shows a higher-severity prompt that should escalate to `approval-required`.
 
-Both are quick sanity checks for how the current security helper classifies risky prompts and change requests.
+`npm run security:non-prompt-example` shows that suspicious override or secret-reveal text in non-prompt fields still gets classified and surfaced for review.
+
+All three are quick sanity checks for how the current security helper classifies risky prompts and change requests.
 
 Important boundary:
-- `node src/cli.js security ...` classifies a prompt or change request
+- `node src/cli.js security ...` classifies a prompt or change request, scanning the main prompt plus other text-bearing fields like summaries and next actions
 - the security output includes `approvalBoundary`, `handlingRecommendation`, and `blockerDetails` so review routing is easier to audit locally
-- `node src/cli.js proposal ...` formats review metadata and rollback notes
+- `node src/cli.js proposal ...` formats review metadata and rollback notes, and now preserves stricter risk floors when risky flags or a prior `securityPosture` are provided
 - neither command enforces approval by itself
 - if the output says `approval-required`, route it into a proposal or human review instead of forcing the change
 

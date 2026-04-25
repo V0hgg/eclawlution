@@ -99,8 +99,8 @@ Makes `eclawlution` improve prompt-injection resistance, approval boundaries, re
 This scaffold now includes:
 
 - a small scorecard engine (`src/scorecard.js`)
-- a change-proposal builder with risk, rollback, and approval metadata (`src/proposal.js`)
-- a security posture helper with severity-tagged prompt-injection signal matching, structured blocker details, and approval-boundary output (`src/security.js`)
+- a change-proposal builder with risk, rollback, approval metadata, and stricter risk-floor clamping for obviously risky proposals (`src/proposal.js`)
+- a security posture helper with severity-tagged prompt-injection signal matching across prompt and other text-bearing change-request fields, structured blocker details, and approval-boundary output (`src/security.js`)
 - a CLI (`src/cli.js`)
 - self-tests (`src/self-test.js`)
 - CI workflow examples
@@ -117,7 +117,7 @@ If you are a user, the short version is:
 - wire the suggested cron loops in your OpenClaw workspace and let them run daily, or
 - manually ask OpenClaw to run one of the loops now, or
 - inspect reports/proposals/Git history to see what changed, or
-- run the local example commands in `docs/USAGE.md`, including the medium-risk and approval-required security examples
+- run the local example commands in `docs/USAGE.md`, including the medium-risk, approval-required, and non-prompt injection security examples
 
 ## Repository structure
 

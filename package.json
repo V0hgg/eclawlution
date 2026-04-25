@@ -15,7 +15,8 @@
     "scorecard:example": "node src/cli.js scorecard examples/workflow-scorecard.example.json",
     "proposal:example": "node src/cli.js proposal examples/change-proposal.example.json",
     "security:example": "node src/cli.js security examples/security-posture.example.json",
-    "security:medium-risk-example": "node src/cli.js security examples/security-posture-medium-risk.example.json"
+    "security:medium-risk-example": "node src/cli.js security examples/security-posture-medium-risk.example.json",
+    "security:non-prompt-example": "node src/cli.js security examples/security-posture-non-prompt-injection.example.json"
   },
   "keywords": [
     "openclaw",

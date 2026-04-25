@@ -1,4 +1,17 @@
 const VALID_RISK_CLASSES = new Set(['safe-local', 'medium-risk', 'approval-required']);
+const VALID_APPROVAL_BOUNDARIES = new Set(['auto-implementable', 'maintainer-review', 'explicit-human-approval']);
+
+const RISK_CLASS_ORDER = {
+  'safe-local': 0,
+  'medium-risk': 1,
+  'approval-required': 2
+};
+
+const APPROVAL_BOUNDARY_ORDER = {
+  'auto-implementable': 0,
+  'maintainer-review': 1,
+  'explicit-human-approval': 2
+};
 
 function normalizeText(value, fallback = '') {
   if (typeof value !== 'string') return fallback;
@@ -22,10 +35,35 @@ function normalizeRiskClass(value) {
   return VALID_RISK_CLASSES.has(normalized) ? normalized : 'safe-local';
 }
 
+function normalizeApprovalBoundary(value) {
+  const normalized = normalizeText(value).toLowerCase();
+  return VALID_APPROVAL_BOUNDARIES.has(normalized) ? normalized : '';
+}
+
+function maxRiskClass(...values) {
+  return values.reduce((highest, value) => {
+    const normalized = normalizeRiskClass(value);
+    return RISK_CLASS_ORDER[normalized] > RISK_CLASS_ORDER[highest] ? normalized : highest;
+  }, 'safe-local');
+}
+
 function inferApprovalBoundary(riskClass) {
   if (riskClass === 'approval-required') return 'explicit-human-approval';
   if (riskClass === 'medium-risk') return 'maintainer-review';
   return 'auto-implementable';
+}
+
+function clampApprovalBoundary(requestedBoundary, riskClass) {
+  const minimumBoundary = inferApprovalBoundary(riskClass);
+  const normalizedRequestedBoundary = normalizeApprovalBoundary(requestedBoundary);
+
+  if (!normalizedRequestedBoundary) {
+    return minimumBoundary;
+  }
+
+  return APPROVAL_BOUNDARY_ORDER[normalizedRequestedBoundary] >= APPROVAL_BOUNDARY_ORDER[minimumBoundary]
+    ? normalizedRequestedBoundary
+    : minimumBoundary;
 }
 
 function defaultRollbackPlan(scope) {
@@ -38,6 +76,9 @@ function defaultRollbackPlan(scope) {
 
 export function buildChangeProposal(input) {
   const source = input && typeof input === 'object' ? input : {};
+  const securityPosture = source.securityPosture && typeof source.securityPosture === 'object'
+    ? source.securityPosture
+    : {};
   const title = normalizeText(source.title, 'Untitled proposal');
   const summary = normalizeText(source.summary);
   const scope = normalizeList(source.scope);
@@ -46,11 +87,19 @@ export function buildChangeProposal(input) {
   const validationChecks = normalizeList(source.validationChecks);
   const nextActions = normalizeList(source.nextActions);
   const requestedApproval = Boolean(source.approvalRequired);
+  const riskyFlagsPresent = Boolean(
+    source.touchesSecrets
+    || source.restartsLiveSystems
+    || source.destructive
+    || source.externalEffects
+  );
 
-  let riskClass = normalizeRiskClass(source.riskClass);
-  if (requestedApproval && riskClass !== 'approval-required') {
-    riskClass = 'approval-required';
-  }
+  const riskClass = maxRiskClass(
+    source.riskClass,
+    requestedApproval ? 'approval-required' : 'safe-local',
+    riskyFlagsPresent ? 'approval-required' : 'safe-local',
+    securityPosture.riskClass
+  );
 
   const rollbackPlan = normalizeList(source.rollbackPlan);
 
@@ -63,7 +112,7 @@ export function buildChangeProposal(input) {
     risks,
     riskClass,
     approvalRequired: riskClass === 'approval-required',
-    approvalBoundary: normalizeText(source.approvalBoundary, inferApprovalBoundary(riskClass)),
+    approvalBoundary: clampApprovalBoundary(source.approvalBoundary, riskClass),
     rollbackPlan: rollbackPlan.length > 0 ? rollbackPlan : defaultRollbackPlan(scope),
     validationChecks,
     nextActions

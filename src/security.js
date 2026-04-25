@@ -80,6 +80,119 @@ const SECRET_TARGET_PATTERNS = [
   /env(?:ironment)?(?: vars?)?/i
 ];
 
+const TEXT_SURFACE_FIELDS = [
+  'prompt',
+  'title',
+  'summary',
+  'humanSummary'
+];
+
+const TEXT_SURFACE_LIST_FIELDS = [
+  'scope',
+  'rationale',
+  'risks',
+  'validationChecks',
+  'nextActions',
+  'notes'
+];
+
+function normalizeSurfaceText(value) {
+  if (typeof value !== 'string') return '';
+  return value.trim();
+}
+
+function buildSurfaceLabel(field, index) {
+  return Number.isInteger(index) ? `${field}[${index}]` : field;
+}
+
+function collectPromptInjectionTextSurfaces(source) {
+  const surfaces = [];
+
+  for (const field of TEXT_SURFACE_FIELDS) {
+    const value = normalizeSurfaceText(source[field]);
+    if (!value) continue;
+
+    surfaces.push({
+      field,
+      label: buildSurfaceLabel(field),
+      value
+    });
+  }
+
+  for (const field of TEXT_SURFACE_LIST_FIELDS) {
+    const value = source[field];
+
+    if (Array.isArray(value)) {
+      value.forEach((item, index) => {
+        const normalized = normalizeSurfaceText(item);
+        if (!normalized) return;
+
+        surfaces.push({
+          field,
+          index,
+          label: buildSurfaceLabel(field, index),
+          value: normalized
+        });
+      });
+
+      continue;
+    }
+
+    const normalized = normalizeSurfaceText(value);
+    if (!normalized) continue;
+
+    surfaces.push({
+      field,
+      label: buildSurfaceLabel(field),
+      value: normalized
+    });
+  }
+
+  return surfaces;
+}
+
+function scanPromptInjectionSurfaces(input) {
+  const surfaces = collectPromptInjectionTextSurfaces(input);
+  const findings = new Set();
+  const matchedSignals = new Map();
+  const flaggedSurfaces = [];
+  let asksForSecrets = false;
+
+  for (const surface of surfaces) {
+    const scan = scanPromptInjection(surface.value);
+
+    scan.findings.forEach((finding) => findings.add(finding));
+    scan.matchedSignals.forEach((signal) => {
+      if (!matchedSignals.has(signal.id)) {
+        matchedSignals.set(signal.id, signal);
+      }
+    });
+
+    asksForSecrets ||= scan.asksForSecrets;
+
+    if (!scan.flagged) continue;
+
+    flaggedSurfaces.push({
+      field: surface.field,
+      index: surface.index,
+      label: surface.label,
+      findings: scan.findings,
+      matchedSignals: scan.matchedSignals,
+      asksForSecrets: scan.asksForSecrets
+    });
+  }
+
+  return {
+    flagged: flaggedSurfaces.length > 0,
+    riskScore: Math.min(10, findings.size * 2 + (asksForSecrets ? 2 : 0)),
+    findings: [...findings],
+    matchedSignals: [...matchedSignals.values()],
+    asksForSecrets,
+    surfacesScanned: surfaces.map(({ field, index, label }) => ({ field, index, label })),
+    flaggedSurfaces
+  };
+}
+
 function inferApprovalBoundary(riskClass) {
   if (riskClass === 'approval-required') return 'explicit-human-approval';
   if (riskClass === 'medium-risk') return 'maintainer-review';
@@ -116,15 +229,17 @@ function buildBlockerDetails({
     details.push(buildBlockerDetail(
       'prompt-injection-risk',
       highSeverityInjection ? 'high' : 'medium',
-      'prompt',
+      'prompt-or-text-surface',
       highSeverityInjection
-        ? 'Prompt matched suspicious instruction patterns, including high-severity injection signals.'
-        : 'Prompt matched suspicious instruction-override or mode-escalation patterns.',
+        ? 'Change request text matched suspicious instruction patterns, including high-severity injection signals.'
+        : 'Change request text matched suspicious instruction-override or mode-escalation patterns.',
       {
         findings: injection.findings,
         matchedSignals: injection.matchedSignals,
         asksForSecrets: injection.asksForSecrets,
-        riskScore: injection.riskScore
+        riskScore: injection.riskScore,
+        flaggedSurfaces: injection.flaggedSurfaces,
+        surfacesScanned: injection.surfacesScanned
       }
     ));
   }
@@ -133,10 +248,13 @@ function buildBlockerDetails({
     details.push(buildBlockerDetail(
       'high-severity-prompt-injection-risk',
       'high',
-      'prompt',
-      'Prompt matched high-severity injection signals that should not auto-apply.',
+      'prompt-or-text-surface',
+      'Change request text matched high-severity injection signals that should not auto-apply.',
       {
-        matchedSignals: injection.matchedSignals.filter(({ id }) => APPROVAL_REQUIRED_SIGNAL_IDS.has(id))
+        matchedSignals: injection.matchedSignals.filter(({ id }) => APPROVAL_REQUIRED_SIGNAL_IDS.has(id)),
+        flaggedSurfaces: injection.flaggedSurfaces.filter(({ matchedSignals: surfaceSignals }) => (
+          surfaceSignals.some(({ id }) => APPROVAL_REQUIRED_SIGNAL_IDS.has(id))
+        ))
       }
     ));
   }
@@ -205,7 +323,7 @@ export function scanPromptInjection(text) {
 
 export function evaluateSecurityPosture(input) {
   const source = input && typeof input === 'object' ? input : {};
-  const injection = scanPromptInjection(source.prompt ?? '');
+  const injection = scanPromptInjectionSurfaces(source);
   const touchesSecrets = Boolean(source.touchesSecrets);
   const restartsLiveSystems = Boolean(source.restartsLiveSystems);
   const destructive = Boolean(source.destructive);
