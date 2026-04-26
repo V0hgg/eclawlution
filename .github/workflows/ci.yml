@@ -19,3 +19,4 @@ jobs:
       - run: npm run proposal:example
       - run: npm run security:example
       - run: npm run security:medium-risk-example
+      - run: npm run security:non-prompt-example

@@ -1,5 +1,6 @@
 const VALID_RISK_CLASSES = new Set(['safe-local', 'medium-risk', 'approval-required']);
 const VALID_APPROVAL_BOUNDARIES = new Set(['auto-implementable', 'maintainer-review', 'explicit-human-approval']);
+const VALID_PROPOSAL_STATUSES = new Set(['draft', 'proposed', 'approved', 'implemented', 'rejected', 'superseded']);
 
 const RISK_CLASS_ORDER = {
   'safe-local': 0,
@@ -38,6 +39,11 @@ function normalizeRiskClass(value) {
 function normalizeApprovalBoundary(value) {
   const normalized = normalizeText(value).toLowerCase();
   return VALID_APPROVAL_BOUNDARIES.has(normalized) ? normalized : '';
+}
+
+function normalizeProposalStatus(value) {
+  const normalized = normalizeText(value).toLowerCase();
+  return VALID_PROPOSAL_STATUSES.has(normalized) ? normalized : 'draft';
 }
 
 function maxRiskClass(...values) {
@@ -107,6 +113,7 @@ export function buildChangeProposal(input) {
     title,
     summary,
     humanSummary: normalizeText(source.humanSummary, summary || title),
+    status: normalizeProposalStatus(source.status),
     scope,
     rationale,
     risks,

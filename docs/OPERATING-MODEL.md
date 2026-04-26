@@ -24,3 +24,8 @@
 - safe-local: docs, prompts, memory files, schedule tweaks, templates, examples, repo reports
 - medium-risk: workflow boundary changes, cron additions/removals, repo automation changes
 - approval-required: restarts, destructive edits, external effects, auth changes
+
+## Proposal routing hygiene
+- safe-local changes can land directly after local checks pass
+- medium-risk and approval-required ideas should stay observable as proposals with an honest lifecycle state such as `draft`, `proposed`, `approved`, or `implemented`
+- proposal state is review metadata, not runtime enforcement, but it reduces confusion about what has actually been accepted or shipped

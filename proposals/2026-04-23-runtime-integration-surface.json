@@ -2,6 +2,7 @@
   "title": "Define a real OpenClaw runtime integration surface",
   "summary": "Bridge the current workflow package into a more concrete runtime contract so docs, manifest, and examples stop implying hooks that do not yet exist.",
   "humanSummary": "Proposal to define a real runtime integration surface for eclawlution instead of relying only on workflow docs and helper scripts.",
+  "status": "proposed",
   "scope": [
     "openclaw.plugin.json",
     "docs/PLUGIN-CONTRACT.md",

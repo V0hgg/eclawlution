@@ -46,7 +46,7 @@ Today this repo gives you:
 - workflow contracts in `workflows/`
 - local helper utilities in `src/` for manifests, scorecards, proposals, and security posture checks
 - example prompts and wiring notes in `examples/`
-- daily reports and proposal routing for repo self-evolution
+- daily reports and proposal routing for repo self-evolution, including lightweight proposal lifecycle state metadata
 
 Today this repo does **not** yet give you:
 
@@ -99,7 +99,7 @@ Makes `eclawlution` improve prompt-injection resistance, approval boundaries, re
 This scaffold now includes:
 
 - a small scorecard engine (`src/scorecard.js`)
-- a change-proposal builder with risk, rollback, approval metadata, and stricter risk-floor clamping for obviously risky proposals (`src/proposal.js`)
+- a change-proposal builder with lifecycle state, risk, rollback, approval metadata, and stricter risk-floor clamping for obviously risky proposals (`src/proposal.js`)
 - a security posture helper with severity-tagged prompt-injection signal matching across prompt and other text-bearing change-request fields, structured blocker details, and approval-boundary output (`src/security.js`)
 - a CLI (`src/cli.js`)
 - self-tests (`src/self-test.js`)

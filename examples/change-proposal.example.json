@@ -2,6 +2,7 @@
   "title": "Shift self-evolution summary later",
   "summary": "Move the daily summary to a time when the user is more likely to be awake.",
   "humanSummary": "Proposal to move the daily self-evolution summary later in the morning.",
+  "status": "proposed",
   "scope": ["cron", "reporting-cadence"],
   "rationale": [
     "Current timing may be too early for useful review.",

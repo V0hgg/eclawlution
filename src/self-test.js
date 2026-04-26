@@ -47,11 +47,25 @@ assert.equal(proposal.title, 'Move digest later');
 assert.equal(proposal.approvalRequired, false);
 assert.equal(proposal.riskClass, 'safe-local');
 assert.equal(proposal.approvalBoundary, 'auto-implementable');
+assert.equal(proposal.status, 'draft');
 assert.ok(proposal.rollbackPlan.length >= 1);
 
 const nullProposal = buildChangeProposal(null);
 assert.equal(nullProposal.title, 'Untitled proposal');
 assert.equal(nullProposal.approvalBoundary, 'auto-implementable');
+assert.equal(nullProposal.status, 'draft');
+
+const approvedStatusProposal = buildChangeProposal({
+  title: 'Accepted change',
+  status: 'APPROVED'
+});
+assert.equal(approvedStatusProposal.status, 'approved');
+
+const invalidStatusProposal = buildChangeProposal({
+  title: 'Unknown lifecycle state',
+  status: 'shipped'
+});
+assert.equal(invalidStatusProposal.status, 'draft');
 
 const riskyFlagsProposal = buildChangeProposal({
   title: 'Restart the gateway now',
@@ -214,6 +228,14 @@ const nonPromptSecurityCli = spawnSync(
 assert.equal(nonPromptSecurityCli.status, 0);
 assert.equal(JSON.parse(nonPromptSecurityCli.stdout).riskClass, 'approval-required');
 
+const proposalExampleCli = spawnSync(
+  process.execPath,
+  ['src/cli.js', 'proposal', 'examples/change-proposal.example.json'],
+  { encoding: 'utf8' }
+);
+assert.equal(proposalExampleCli.status, 0);
+assert.equal(JSON.parse(proposalExampleCli.stdout).status, 'proposed');
+
 const missingFileCli = spawnSync(process.execPath, ['src/cli.js', 'scorecard', 'does-not-exist.json'], { encoding: 'utf8' });
 assert.equal(missingFileCli.status, 1);
 assert.match(missingFileCli.stderr, /Could not read JSON file: does-not-exist\.json/);
@@ -252,6 +274,10 @@ console.log(JSON.stringify({
   manifestCli: {
     status: manifestCli.status,
     version: JSON.parse(manifestCli.stdout).version
+  },
+  proposalExampleCli: {
+    status: proposalExampleCli.status,
+    proposalStatus: JSON.parse(proposalExampleCli.stdout).status
   },
   nonPromptSecurityCli: {
     status: nonPromptSecurityCli.status,

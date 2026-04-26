@@ -49,10 +49,11 @@ Today the repo exposes security posture **classification**, not hard runtime enf
 
 - `evaluateSecurityPosture()` classifies prompts and change requests into a risk class plus `approvalBoundary`, `handlingRecommendation`, and structured `blockerDetails`
 - prompt-injection scanning now looks at the main prompt plus other text-bearing change-request fields, so suspicious content in summaries, rationale, or next actions is harder to miss
-- `buildChangeProposal()` formats review metadata, rollback notes, and approval labels
+- `buildChangeProposal()` formats proposal lifecycle state, review metadata, rollback notes, and approval labels
 - `buildChangeProposal()` now clamps proposal risk upward when destructive, restart, secret-touching, or external-effect flags are present, and it can use `securityPosture.riskClass` as a stricter floor
 - neither helper blocks execution by itself
 - callers should still run security evaluation first, then route `medium-risk` and `approval-required` results into maintainer or human review instead of auto-applying them
+- proposal `status` is observable review metadata only today, but it helps make pending versus implemented security-sensitive ideas easier to audit
 
 Important implementation note:
 - `buildChangeProposal()` now defends against some under-classification footguns, but it is still not a substitute for running `evaluateSecurityPosture()` first

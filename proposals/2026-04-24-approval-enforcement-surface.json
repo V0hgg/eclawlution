@@ -2,6 +2,7 @@
   "title": "Define approval enforcement and approval-tracking surface",
   "summary": "Turn approvalBoundary from a routing hint into a clearer runtime contract with explicit approval recording and operator-visible enforcement points.",
   "humanSummary": "Proposal to design a real approval-enforcement surface for eclawlution so risky changes are not only labeled, but also routed and tracked more explicitly.",
+  "status": "proposed",
   "scope": [
     "docs/PLUGIN-CONTRACT.md",
     "runtime-wiring",

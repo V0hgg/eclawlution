@@ -39,6 +39,7 @@ Change proposals should carry enough metadata to be reviewed or auto-routed safe
   "title": "Shift self-evolution summary later",
   "summary": "Move the daily summary to a time when the user is more likely to be awake.",
   "humanSummary": "Proposal to move the daily self-evolution summary later in the morning.",
+  "status": "proposed",
   "scope": ["cron", "reporting-cadence"],
   "rationale": ["Current timing may be too early for useful review."],
   "risks": ["Summary may overlap with other morning workflows."],
@@ -60,3 +61,14 @@ Change proposals should carry enough metadata to be reviewed or auto-routed safe
 - `auto-implementable` - safe to apply locally when checks pass
 - `maintainer-review` - safe to draft, but should be reviewed before rollout
 - `explicit-human-approval` - blocked until a human explicitly approves it
+
+### Proposal lifecycle states
+- `draft` - captured but not yet ready for review
+- `proposed` - ready for maintainer or human review
+- `approved` - accepted for implementation
+- `implemented` - already landed
+- `rejected` - intentionally not moving forward
+- `superseded` - replaced by a newer proposal
+
+This lifecycle metadata is intentionally lightweight today.
+It improves review clarity without pretending runtime approval enforcement already exists.

@@ -74,9 +74,10 @@ All three are quick sanity checks for how the current security helper classifies
 Important boundary:
 - `node src/cli.js security ...` classifies a prompt or change request, scanning the main prompt plus other text-bearing fields like summaries and next actions
 - the security output includes `approvalBoundary`, `handlingRecommendation`, and `blockerDetails` so review routing is easier to audit locally
-- `node src/cli.js proposal ...` formats review metadata and rollback notes, and now preserves stricter risk floors when risky flags or a prior `securityPosture` are provided
+- `node src/cli.js proposal ...` formats lifecycle state, review metadata, and rollback notes, and now preserves stricter risk floors when risky flags or a prior `securityPosture` are provided
 - neither command enforces approval by itself
 - if the output says `approval-required`, route it into a proposal or human review instead of forcing the change
+- if a proposal is still pending review, keep its `status` honest (`draft` or `proposed`) instead of making it look implemented prematurely
 
 ### Mode 3: Review what changed
 Check these places:

@@ -1,33 +1,38 @@
 # eclawlution Roadmap
 
-## v0.1
+This roadmap is directional, not a perfect changelog.
+To keep the repo honest, the sections below separate what is already shipped in the repo today from what is still planned.
+
+## Shipped in the repo today
 - repository scaffold
 - self-evolution protocol
 - conversation digest protocol
-- architecture docs
+- architecture and operating-model docs
 - GitHub publish
+- workflow scorecard engine
+- CLI for manifest, scorecard, proposal, and security posture inspection
+- security posture classification helper
+- CI workflow and issue templates
+- repo self-evolution reports and proposal routing artifacts
+- lightweight proposal lifecycle state metadata
 
-## v0.2
-- workflow scorecard
-- usefulness scoring for cron jobs
+## Still planned or only partially implemented
+- usefulness scoring for individual cron jobs
 - schedule recommendation logic
 - style-fit diff tracking
-- CLI for scorecards and change proposals
-- CI and issue templates
-
-## v0.3
-- native OpenClaw plugin contract
-- extension hooks for transcript digestion
-- structured recommendation objects
-- bridge current workflow package into a real OpenClaw extension surface
-- daily repo self-evolution loop with reports/proposals/auto-push for safe changes
-
-## v0.4
-- draft PR / proposal generation
-- safer config mutation planner
-- approval-aware restart planner
-
-## v0.5
+- transcript digestion hooks
+- structured recommendation objects beyond local helper output
+- a real runtime integration surface that bridges docs/workflows into native OpenClaw hooks
+- hard runtime approval enforcement instead of classification plus review metadata only
+- draft PR generation for larger changes
+- safer config mutation planning
+- approval-aware restart planning
 - deeper adaptation loops
 - cross-workflow optimization
 - better user-fit evaluation metrics
+
+## Near-term priorities
+- keep shipped versus planned capability brutally clear in docs and examples
+- strengthen proposal observability and approval-boundary documentation
+- expand adversarial prompt-injection tests and examples before attempting heavier enforcement claims
+- add safe, local-only workflow tuning helpers that remain easy to audit and revert
