@@ -67,15 +67,18 @@ const APPROVAL_REQUIRED_SIGNAL_IDS = new Set(
     .map(({ id }) => id)
 );
 
+const SECRET_ACCESS_VERB_PATTERNS = [
+  /\b(?:reveal|show|expose|print|dump|export|steal|list|read|display|return|copy|leak)\b/i
+];
+
 const SECRET_TARGET_PATTERNS = [
-  /api[_ -]?key/i,
-  /token/i,
-  /secret/i,
-  /password/i,
-  /credential/i,
-  /auth/i,
-  /ssh/i,
-  /private key/i,
+  /api[_ -]?keys?/i,
+  /tokens?/i,
+  /secrets?/i,
+  /passwords?/i,
+  /credentials?/i,
+  /ssh(?:\s+private)?\s+keys?/i,
+  /private keys?/i,
   /environment variables?/i,
   /env(?:ironment)?(?: vars?)?/i
 ];
@@ -193,6 +196,11 @@ function scanPromptInjectionSurfaces(input) {
   };
 }
 
+function requestsSensitiveMaterial(text) {
+  return SECRET_ACCESS_VERB_PATTERNS.some((pattern) => pattern.test(text))
+    && SECRET_TARGET_PATTERNS.some((pattern) => pattern.test(text));
+}
+
 function inferApprovalBoundary(riskClass) {
   if (riskClass === 'approval-required') return 'explicit-human-approval';
   if (riskClass === 'medium-risk') return 'maintainer-review';
@@ -215,6 +223,32 @@ function buildBlockerDetail(id, severity, source, summary, evidence = {}) {
   };
 }
 
+function summarizePromptInjection(injection, highSeverityInjection) {
+  if (highSeverityInjection) {
+    return 'Change request text matched suspicious instruction patterns, including high-severity injection or sensitive-material access signals.';
+  }
+
+  if (injection.findings.length > 0) {
+    return 'Change request text matched suspicious instruction-override or mode-escalation patterns.';
+  }
+
+  if (injection.asksForSecrets) {
+    return 'Change request text asks to reveal, list, or otherwise expose sensitive material.';
+  }
+
+  return 'Change request text matched suspicious prompt-injection signals.';
+}
+
+function buildHighSeverityPromptInjectionEvidence(injection) {
+  return {
+    matchedSignals: injection.matchedSignals.filter(({ id }) => APPROVAL_REQUIRED_SIGNAL_IDS.has(id)),
+    asksForSecrets: injection.asksForSecrets,
+    flaggedSurfaces: injection.flaggedSurfaces.filter(({ asksForSecrets, matchedSignals: surfaceSignals }) => (
+      asksForSecrets || surfaceSignals.some(({ id }) => APPROVAL_REQUIRED_SIGNAL_IDS.has(id))
+    ))
+  };
+}
+
 function buildBlockerDetails({
   injection,
   highSeverityInjection,
@@ -230,9 +264,7 @@ function buildBlockerDetails({
       'prompt-injection-risk',
       highSeverityInjection ? 'high' : 'medium',
       'prompt-or-text-surface',
-      highSeverityInjection
-        ? 'Change request text matched suspicious instruction patterns, including high-severity injection signals.'
-        : 'Change request text matched suspicious instruction-override or mode-escalation patterns.',
+      summarizePromptInjection(injection, highSeverityInjection),
       {
         findings: injection.findings,
         matchedSignals: injection.matchedSignals,
@@ -249,13 +281,10 @@ function buildBlockerDetails({
       'high-severity-prompt-injection-risk',
       'high',
       'prompt-or-text-surface',
-      'Change request text matched high-severity injection signals that should not auto-apply.',
-      {
-        matchedSignals: injection.matchedSignals.filter(({ id }) => APPROVAL_REQUIRED_SIGNAL_IDS.has(id)),
-        flaggedSurfaces: injection.flaggedSurfaces.filter(({ matchedSignals: surfaceSignals }) => (
-          surfaceSignals.some(({ id }) => APPROVAL_REQUIRED_SIGNAL_IDS.has(id))
-        ))
-      }
+      injection.asksForSecrets
+        ? 'Change request text asked to reveal or expose sensitive material and should not auto-apply.'
+        : 'Change request text matched high-severity injection signals that should not auto-apply.',
+      buildHighSeverityPromptInjectionEvidence(injection)
     ));
   }
 
@@ -309,7 +338,7 @@ export function scanPromptInjection(text) {
     .map(({ id, description, severity }) => ({ id, description, severity }));
 
   const findings = matchedSignals.map(({ id }) => id);
-  const asksForSecrets = SECRET_TARGET_PATTERNS.some((pattern) => pattern.test(value));
+  const asksForSecrets = requestsSensitiveMaterial(value);
   const riskScore = Math.min(10, findings.length * 2 + (asksForSecrets ? 2 : 0));
 
   return {
@@ -328,7 +357,8 @@ export function evaluateSecurityPosture(input) {
   const restartsLiveSystems = Boolean(source.restartsLiveSystems);
   const destructive = Boolean(source.destructive);
   const externalEffects = Boolean(source.externalEffects);
-  const highSeverityInjection = injection.findings.some((id) => APPROVAL_REQUIRED_SIGNAL_IDS.has(id));
+  const highSeverityInjection = injection.asksForSecrets
+    || injection.findings.some((id) => APPROVAL_REQUIRED_SIGNAL_IDS.has(id));
 
   const blockers = [];
   if (injection.flagged) blockers.push('prompt-injection-risk');

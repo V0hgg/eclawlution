@@ -57,6 +57,7 @@ npm run check
 npm run manifest
 npm run scorecard:example
 npm run proposal:example
+npm run security:safe-local-example
 npm run security:example
 npm run security:medium-risk-example
 npm run security:non-prompt-example
@@ -64,12 +65,15 @@ npm run security:non-prompt-example
 
 These commands do not run the whole OpenClaw orchestration loop, but they let you inspect the building blocks.
 
+`npm run security:safe-local-example` shows a benign auth/security-adjacent change request that should stay at `safe-local`.
 `npm run security:medium-risk-example` shows a suspicious prompt that should stay at `medium-risk`.
 `npm run security:example` shows a higher-severity prompt that should escalate to `approval-required`.
 
 `npm run security:non-prompt-example` shows that suspicious override or secret-reveal text in non-prompt fields still gets classified and surfaced for review.
 
-All three are quick sanity checks for how the current security helper classifies risky prompts and change requests.
+Benign auth or token-documentation text should not escalate by itself unless the request also asks to reveal sensitive material or sets sensitive change flags.
+
+All four are quick sanity checks for how the current security helper classifies safe-local and risky prompts or change requests.
 
 Important boundary:
 - `node src/cli.js security ...` classifies a prompt or change request, scanning the main prompt plus other text-bearing fields like summaries and next actions

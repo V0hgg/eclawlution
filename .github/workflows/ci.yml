@@ -17,6 +17,7 @@ jobs:
       - run: npm run check
       - run: npm run scorecard:example
       - run: npm run proposal:example
+      - run: npm run security:safe-local-example
       - run: npm run security:example
       - run: npm run security:medium-risk-example
       - run: npm run security:non-prompt-example

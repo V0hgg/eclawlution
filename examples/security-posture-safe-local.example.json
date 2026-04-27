@@ -1,0 +1,8 @@
+{
+  "title": "Document auth boundary",
+  "summary": "Clarify OAuth token refresh docs and approval notes for maintainers.",
+  "touchesSecrets": false,
+  "restartsLiveSystems": false,
+  "destructive": false,
+  "externalEffects": false
+}

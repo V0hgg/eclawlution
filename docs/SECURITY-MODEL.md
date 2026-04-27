@@ -30,6 +30,7 @@ The system should treat attempts like these as suspicious by default:
 
 Prompt-injection findings should increase risk class and often force proposal-only handling.
 Suspicious instruction-override or mode-escalation prompts can land in `medium-risk`, while attempts to disable approval, reveal or dump secrets, or restart live systems should escalate to `approval-required`.
+Benign auth or token-related documentation text should stay `safe-local` unless it also asks to expose sensitive material or sets sensitive change flags.
 
 ## Risk classes
 - **safe-local**: docs, examples, prompts, tests, templates, additive local logic
@@ -65,9 +66,11 @@ Important implementation note:
 Inside the repo, you can inspect the current security helper behavior with:
 
 ```bash
+npm run security:safe-local-example
 npm run security:medium-risk-example
 npm run security:example
 npm run security:non-prompt-example
+node src/cli.js security examples/security-posture-safe-local.example.json
 node src/cli.js security examples/security-posture-medium-risk.example.json
 node src/cli.js security examples/security-posture.example.json
 node src/cli.js security examples/security-posture-non-prompt-injection.example.json
