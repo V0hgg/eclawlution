@@ -20,4 +20,7 @@ jobs:
       - run: npm run security:safe-local-example
       - run: npm run security:example
       - run: npm run security:medium-risk-example
+      - run: npm run security:guardrail-disable-example
+      - run: npm run security:secret-exfiltration-example
+      - run: npm run security:restart-without-approval-example
       - run: npm run security:non-prompt-example

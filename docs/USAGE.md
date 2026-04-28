@@ -60,6 +60,9 @@ npm run proposal:example
 npm run security:safe-local-example
 npm run security:example
 npm run security:medium-risk-example
+npm run security:guardrail-disable-example
+npm run security:secret-exfiltration-example
+npm run security:restart-without-approval-example
 npm run security:non-prompt-example
 ```
 
@@ -68,12 +71,15 @@ These commands do not run the whole OpenClaw orchestration loop, but they let yo
 `npm run security:safe-local-example` shows a benign auth/security-adjacent change request that should stay at `safe-local`.
 `npm run security:medium-risk-example` shows a suspicious prompt that should stay at `medium-risk`.
 `npm run security:example` shows a higher-severity prompt that should escalate to `approval-required`.
+`npm run security:guardrail-disable-example` shows that attempts to disable safety guardrails escalate to `approval-required`.
+`npm run security:secret-exfiltration-example` shows that dump/export-style secret exfiltration requests escalate to `approval-required`.
+`npm run security:restart-without-approval-example` shows that restart-without-approval text is treated as approval-gated even without extra risk flags.
 
 `npm run security:non-prompt-example` shows that suspicious override or secret-reveal text in non-prompt fields still gets classified and surfaced for review.
 
 Benign auth or token-documentation text should not escalate by itself unless the request also asks to reveal sensitive material or sets sensitive change flags.
 
-All four are quick sanity checks for how the current security helper classifies safe-local and risky prompts or change requests.
+All seven are quick sanity checks for how the current security helper classifies safe-local, medium-risk, and approval-required prompts or change requests.
 
 Important boundary:
 - `node src/cli.js security ...` classifies a prompt or change request, scanning the main prompt plus other text-bearing fields like summaries and next actions

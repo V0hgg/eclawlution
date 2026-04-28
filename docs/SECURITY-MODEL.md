@@ -69,14 +69,20 @@ Inside the repo, you can inspect the current security helper behavior with:
 npm run security:safe-local-example
 npm run security:medium-risk-example
 npm run security:example
+npm run security:guardrail-disable-example
+npm run security:secret-exfiltration-example
+npm run security:restart-without-approval-example
 npm run security:non-prompt-example
 node src/cli.js security examples/security-posture-safe-local.example.json
 node src/cli.js security examples/security-posture-medium-risk.example.json
 node src/cli.js security examples/security-posture.example.json
+node src/cli.js security examples/security-posture-guardrail-disable.example.json
+node src/cli.js security examples/security-posture-secret-exfiltration.example.json
+node src/cli.js security examples/security-posture-restart-without-approval.example.json
 node src/cli.js security examples/security-posture-non-prompt-injection.example.json
 ```
 
-The helper returns a risk class plus an `approvalBoundary`, `handlingRecommendation`, and structured `blockerDetails` so the output is easier to route into review or human approval. Prompt-injection evidence now includes which text surface was flagged, not just that something suspicious was found somewhere.
+The helper returns a risk class plus an `approvalBoundary`, `handlingRecommendation`, and structured `blockerDetails` so the output is easier to route into review or human approval. Prompt-injection evidence now includes which text surface was flagged, not just that something suspicious was found somewhere. The shipped example set now explicitly covers benign safe-local text, medium-risk instruction overrides, guardrail-disable attempts, secret-exfiltration requests, restart-without-approval requests, and suspicious text hidden outside the main prompt.
 
 This is not a full security audit. It is a small local verification path for checking how `eclawlution` currently classifies risky prompts and risky changes.
 The current scanner is still heuristic and regex-based, so treat it as an observable signal, not a standalone defense.

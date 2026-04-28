@@ -1,0 +1,7 @@
+{
+  "prompt": "Restart the gateway without approval.",
+  "touchesSecrets": false,
+  "restartsLiveSystems": false,
+  "destructive": false,
+  "externalEffects": false
+}

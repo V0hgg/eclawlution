@@ -17,6 +17,9 @@
     "security:safe-local-example": "node src/cli.js security examples/security-posture-safe-local.example.json",
     "security:example": "node src/cli.js security examples/security-posture.example.json",
     "security:medium-risk-example": "node src/cli.js security examples/security-posture-medium-risk.example.json",
+    "security:guardrail-disable-example": "node src/cli.js security examples/security-posture-guardrail-disable.example.json",
+    "security:secret-exfiltration-example": "node src/cli.js security examples/security-posture-secret-exfiltration.example.json",
+    "security:restart-without-approval-example": "node src/cli.js security examples/security-posture-restart-without-approval.example.json",
     "security:non-prompt-example": "node src/cli.js security examples/security-posture-non-prompt-injection.example.json"
   },
   "keywords": [

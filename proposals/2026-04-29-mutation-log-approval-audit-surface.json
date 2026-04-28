@@ -1,0 +1,40 @@
+{
+  "title": "Define an append-only mutation log and approval-audit surface",
+  "summary": "Capture self-evolution mutations and approval-state transitions in an explicit append-only audit trail before attempting heavier approval enforcement.",
+  "humanSummary": "Proposal to add a small append-only mutation log plus approval-audit metadata so eclawlution can explain what changed, who approved it, and why, without pretending hard runtime enforcement already exists.",
+  "status": "proposed",
+  "scope": [
+    "src/mutation-log.js",
+    "proposal-lifecycle",
+    "approval-tracking",
+    "docs/PLUGIN-CONTRACT.md",
+    "reports"
+  ],
+  "rationale": [
+    "Recent repo self-evolution reviews keep converging on the same trust gap: approval metadata exists, but there is no durable mutation or approval audit trail yet.",
+    "An append-only log is a practical intermediate step between pure classification and full runtime enforcement.",
+    "This would improve observability, rollback confidence, and operator trust without requiring secrets, auth changes, or live restart behavior."
+  ],
+  "risks": [
+    "Could imply stronger enforcement than the repo actually ships if the docs get ahead of the implementation.",
+    "A rushed design could produce noisy logs or unstable schema that later consumers would have to unwind.",
+    "If actor/source metadata is underspecified, the audit trail may look precise while still being hard to trust."
+  ],
+  "riskClass": "medium-risk",
+  "approvalRequired": false,
+  "approvalBoundary": "maintainer-review",
+  "rollbackPlan": [
+    "revert mutation-log and approval-audit surface changes back to the current proposal-and-report-only flow",
+    "remove any unused local log artifacts from examples or docs and re-run local checks"
+  ],
+  "validationChecks": [
+    "Keep the first implementation additive and local-only, with no auth, secrets, external effects, or live restart behavior.",
+    "Require explicit timestamp, actor/source, action kind, and rationale fields on every logged entry.",
+    "Keep README, plugin contract, security model, and proposal lifecycle docs aligned about what is observable versus enforced."
+  ],
+  "nextActions": [
+    "Design the minimum append-only entry schema for mutation and approval events.",
+    "Decide whether the first shipped surface should be report-linked JSONL logging, CLI inspection, or proposal-state transition logging.",
+    "Review the design with a maintainer before implementing code or claiming stronger enforcement."
+  ]
+}
