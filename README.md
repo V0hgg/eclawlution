@@ -46,6 +46,7 @@ Today this repo gives you:
 - workflow contracts in `workflows/`
 - local helper utilities in `src/` for manifests, scorecards, proposals, and security posture checks
 - example prompts and wiring notes in `examples/`
+- a descriptive `openclaw.plugin.json` scaffold that marks the repo as an optional extension surface, but does not register jobs or hooks by itself
 - daily reports and proposal routing for repo self-evolution, including lightweight proposal lifecycle state metadata
 
 Today this repo does **not** yet give you:
@@ -55,6 +56,12 @@ Today this repo does **not** yet give you:
 - memory or style-fit mutation code
 - runtime enforcement of `approvalBoundary`
 - native OpenClaw hook registration beyond a minimal manifest scaffold
+
+Important clarification:
+- `openclaw.plugin.json` is currently descriptive metadata only
+- it does not auto-install cron jobs
+- it does not register native runtime hooks yet
+- manual workspace wiring is still the real way to use the loops in this repo today
 
 ## Design goals
 
@@ -118,6 +125,11 @@ If you are a user, the short version is:
 - manually ask OpenClaw to run one of the loops now, or
 - inspect reports/proposals/Git history to see what changed, or
 - run the local example commands in `docs/USAGE.md`, including safe-local, medium-risk, guardrail-disable, secret-exfiltration, restart-without-approval, approval-required, and non-prompt injection security examples
+
+For the manual setup path, start with:
+- `docs/USAGE.md`
+- `examples/openclaw-wiring.md`
+- `examples/manual-openclaw-prompts.md`
 
 ## Repository structure
 

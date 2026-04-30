@@ -26,6 +26,14 @@ If you want the daily loop timings below, wire them in your own OpenClaw workspa
 This is the easiest mode.
 
 This mode assumes you already wired those jobs yourself. The repo documents the pattern, but the current plugin scaffold does not register the jobs automatically.
+`openclaw.plugin.json` is descriptive only today, not an installer or hook registrar.
+
+Recommended manual wiring checklist:
+- clone or place `eclawlution` somewhere inside your OpenClaw workspace
+- read `examples/openclaw-wiring.md` for suggested job objects, schedules, and safety notes
+- read `examples/manual-openclaw-prompts.md` for copyable manual-run prompts
+- when wiring the repo self-evolution loop, keep the prompt explicitly scoped to your local `eclawlution` repo path or repo folder
+- start with reports, docs, examples, and proposal-only trust building before expanding automation
 
 Expected daily flow:
 - **23:40** conversation digest updates style and memory fit
@@ -40,6 +48,12 @@ The system learns from:
 - what annoys you
 - what kind of replies fit you better
 
+If you want a more concrete starting point for job payloads, use the example objects in `examples/openclaw-wiring.md` and then adapt:
+- timezone
+- session target
+- delivery mode
+- the exact repo path or repo-scoping language for your workspace
+
 ### Mode 2: Run a manual cycle now
 If you want to force a cycle immediately, do one of these:
 
@@ -48,6 +62,8 @@ Ask the assistant to:
 - run the self-evolution cycle now
 - run the conversation digest now
 - run the repo self-evolution now
+
+Copyable prompt variants live in `examples/manual-openclaw-prompts.md`.
 
 #### From the repo locally
 Inside the repo:
@@ -131,6 +147,11 @@ The repo loop should behave like this:
 - anything with surprising external side effects
 
 Approval enforcement is still an operator and orchestrator responsibility today. The local CLI helps classify and document changes, but it does not act as a hard runtime gate.
+
+The same honesty applies to plugin wiring:
+- the repo ships a plugin-shaped scaffold
+- the repo does not yet ship native runtime hook registration
+- operators still need to wire cron jobs or trigger the loops manually
 
 ## Short mental model
 

@@ -1,5 +1,12 @@
 # Native Plugin Contract (Phase 2)
 
+## Current reality before Phase 2 lands
+
+Today `openclaw.plugin.json` is a descriptive scaffold only.
+It helps mark the intended extension surface, but it does not register hooks, install cron jobs, or activate the workflows in this repo by itself.
+
+Treat this document as a target contract for a later runtime phase, not a claim that the runtime integration already exists.
+
 ## Goal
 Turn eclawlution from a workflow package into a real OpenClaw-native extension.
 
