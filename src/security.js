@@ -96,7 +96,8 @@ const TEXT_SURFACE_LIST_FIELDS = [
   'risks',
   'validationChecks',
   'nextActions',
-  'notes'
+  'notes',
+  'rollbackPlan'
 ];
 
 function normalizeSurfaceText(value) {

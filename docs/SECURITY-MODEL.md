@@ -49,7 +49,7 @@ Benign auth or token-related documentation text should stay `safe-local` unless 
 Today the repo exposes security posture **classification**, not hard runtime enforcement.
 
 - `evaluateSecurityPosture()` classifies prompts and change requests into a risk class plus `approvalBoundary`, `handlingRecommendation`, and structured `blockerDetails`
-- prompt-injection scanning now looks at the main prompt plus other text-bearing change-request fields, so suspicious content in summaries, rationale, or next actions is harder to miss
+- prompt-injection scanning now looks at the main prompt plus other text-bearing change-request fields, so suspicious content in summaries, rationale, rollback plans, or next actions is harder to miss
 - `buildChangeProposal()` formats proposal lifecycle state, review metadata, rollback notes, and approval labels
 - `buildChangeProposal()` now clamps proposal risk upward when destructive, restart, secret-touching, or external-effect flags are present, and it can use `securityPosture.riskClass` as a stricter floor
 - neither helper blocks execution by itself
@@ -73,6 +73,7 @@ npm run security:guardrail-disable-example
 npm run security:secret-exfiltration-example
 npm run security:restart-without-approval-example
 npm run security:non-prompt-example
+npm run security:rollback-injection-example
 node src/cli.js security examples/security-posture-safe-local.example.json
 node src/cli.js security examples/security-posture-medium-risk.example.json
 node src/cli.js security examples/security-posture.example.json
@@ -80,9 +81,10 @@ node src/cli.js security examples/security-posture-guardrail-disable.example.jso
 node src/cli.js security examples/security-posture-secret-exfiltration.example.json
 node src/cli.js security examples/security-posture-restart-without-approval.example.json
 node src/cli.js security examples/security-posture-non-prompt-injection.example.json
+node src/cli.js security examples/security-posture-rollback-injection.example.json
 ```
 
-The helper returns a risk class plus an `approvalBoundary`, `handlingRecommendation`, and structured `blockerDetails` so the output is easier to route into review or human approval. Prompt-injection evidence now includes which text surface was flagged, not just that something suspicious was found somewhere. The shipped example set now explicitly covers benign safe-local text, medium-risk instruction overrides, guardrail-disable attempts, secret-exfiltration requests, restart-without-approval requests, and suspicious text hidden outside the main prompt.
+The helper returns a risk class plus an `approvalBoundary`, `handlingRecommendation`, and structured `blockerDetails` so the output is easier to route into review or human approval. Prompt-injection evidence now includes which text surface was flagged, not just that something suspicious was found somewhere. The shipped example set now explicitly covers benign safe-local text, medium-risk instruction overrides, guardrail-disable attempts, secret-exfiltration requests, restart-without-approval requests, suspicious text hidden outside the main prompt, and injection attempts hidden inside rollback plan entries.
 
 This is not a full security audit. It is a small local verification path for checking how `eclawlution` currently classifies risky prompts and risky changes.
 The current scanner is still heuristic and regex-based, so treat it as an observable signal, not a standalone defense.

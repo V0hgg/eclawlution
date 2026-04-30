@@ -20,7 +20,8 @@
     "security:guardrail-disable-example": "node src/cli.js security examples/security-posture-guardrail-disable.example.json",
     "security:secret-exfiltration-example": "node src/cli.js security examples/security-posture-secret-exfiltration.example.json",
     "security:restart-without-approval-example": "node src/cli.js security examples/security-posture-restart-without-approval.example.json",
-    "security:non-prompt-example": "node src/cli.js security examples/security-posture-non-prompt-injection.example.json"
+    "security:non-prompt-example": "node src/cli.js security examples/security-posture-non-prompt-injection.example.json",
+    "security:rollback-injection-example": "node src/cli.js security examples/security-posture-rollback-injection.example.json"
   },
   "keywords": [
     "openclaw",

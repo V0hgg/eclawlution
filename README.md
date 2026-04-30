@@ -124,7 +124,7 @@ If you are a user, the short version is:
 - wire the suggested cron loops in your OpenClaw workspace and let them run daily, or
 - manually ask OpenClaw to run one of the loops now, or
 - inspect reports/proposals/Git history to see what changed, or
-- run the local example commands in `docs/USAGE.md`, including safe-local, medium-risk, guardrail-disable, secret-exfiltration, restart-without-approval, approval-required, and non-prompt injection security examples
+- run the local example commands in `docs/USAGE.md`, including safe-local, medium-risk, guardrail-disable, secret-exfiltration, restart-without-approval, approval-required, non-prompt injection, and rollback-injection security examples
 
 For the manual setup path, start with:
 - `docs/USAGE.md`

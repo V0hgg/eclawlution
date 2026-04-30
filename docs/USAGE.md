@@ -80,6 +80,7 @@ npm run security:guardrail-disable-example
 npm run security:secret-exfiltration-example
 npm run security:restart-without-approval-example
 npm run security:non-prompt-example
+npm run security:rollback-injection-example
 ```
 
 These commands do not run the whole OpenClaw orchestration loop, but they let you inspect the building blocks.
@@ -92,13 +93,14 @@ These commands do not run the whole OpenClaw orchestration loop, but they let yo
 `npm run security:restart-without-approval-example` shows that restart-without-approval text is treated as approval-gated even without extra risk flags.
 
 `npm run security:non-prompt-example` shows that suspicious override or secret-reveal text in non-prompt fields still gets classified and surfaced for review.
+`npm run security:rollback-injection-example` shows that injection attempts hidden inside rollback plan text are caught by the same heuristic scanner and surfaced for review.
 
 Benign auth or token-documentation text should not escalate by itself unless the request also asks to reveal sensitive material or sets sensitive change flags.
 
-All seven are quick sanity checks for how the current security helper classifies safe-local, medium-risk, and approval-required prompts or change requests.
+All eight are quick sanity checks for how the current security helper classifies safe-local, medium-risk, and approval-required prompts or change requests.
 
 Important boundary:
-- `node src/cli.js security ...` classifies a prompt or change request, scanning the main prompt plus other text-bearing fields like summaries and next actions
+- `node src/cli.js security ...` classifies a prompt or change request, scanning the main prompt plus other text-bearing fields like summaries, rollback plans, and next actions
 - the security output includes `approvalBoundary`, `handlingRecommendation`, and `blockerDetails` so review routing is easier to audit locally
 - `node src/cli.js proposal ...` formats lifecycle state, review metadata, and rollback notes, and now preserves stricter risk floors when risky flags or a prior `securityPosture` are provided
 - neither command enforces approval by itself

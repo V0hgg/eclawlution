@@ -24,3 +24,4 @@ jobs:
       - run: npm run security:secret-exfiltration-example
       - run: npm run security:restart-without-approval-example
       - run: npm run security:non-prompt-example
+      - run: npm run security:rollback-injection-example
